@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# Write output from tw_cli to a directory
+
+# Config options
+IOSTAT_BIN="/usr/bin/iostat"
+IOSTAT_OUTPUT="/tmp/iostat"
+
+# Make sure we can execute tw_cli
+if [ ! -x "$IOSTAT_BIN" ]; then
+	echo "Error: $IOSTAT_BIN isn't executable"
+	exit 3
+fi
+
+$IOSTAT_BIN -xkd 30 2 | sed 's/,/\./g' > $IOSTAT_OUTPUT.tmp && mv $IOSTAT_OUTPUT.tmp $IOSTAT_OUTPUT
